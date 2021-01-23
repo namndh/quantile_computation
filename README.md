@@ -1,4 +1,4 @@
-## TechComBank Interview Coding Test
+## TechcomBank Interview Coding Test
 
 ### Problem definition:
 - In my opinion, the requirement of the test is to compute the quantile value of a list of number with known p-th percentile
