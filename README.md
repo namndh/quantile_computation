@@ -1,4 +1,4 @@
-## Techcombank Interview Coding Test
+## TechComBank Interview Coding Test
 
 ### Problem definition:
 - In my opinion, the requirement of the test is to compute the quantile value of a list of number with known p-th percentile
@@ -6,10 +6,10 @@
 - The algorithm I used in this project is:
     - Let `n` be the length of the `sorted_pool` and `0 < p <= 100` be the desired percentile.
     - If `n = 1` return the unique array element (regardless of the value of `p`); otherwise
-    - Compute the estimated percentile position in the array (with Python, array starts with 0) `pos = (p * (n + 1) / 100) - 1` and the difference, `d` between `pos` and `floor(pos)`.
+    - Compute the estimated percentile position in the array `pos = (p * (n + 1) / 100)` and the difference, `d` between `pos` and `floor(pos)`.
     - If `pos < 1` return the smallest element in the array.
     - Else if `pos >= n` return the largest element in the array.
-    - Else let `lower = sorted_pool[floor(pos)]` and let `upper = sorted_pool[floor(pos) + 1]`. Return `lower + d * (upper - lower)`
+    - Else let `lower = sorted_pool[floor(pos)-1]` and let `upper = sorted_pool[floor(pos)]` (in Python, array start with 0). Return `lower + d * (upper - lower)`
 ### Installation:
 - Requirement: `docker`, `docker-compose`
 - To build a new container: `docker-compose build`
