@@ -8,7 +8,7 @@ def compute_quantile(pool: List[float], percentile: float) -> float:
     if n == 1:
         return pool[0]
     else:
-        if 1 < percentile <= 100:
+        if 0 < percentile <= 100:
             quantile = percentile / 100
             pos = quantile * (n + 1)
             if pos < 1:
