@@ -2,7 +2,7 @@
 
 ### Problem definition:
 - In my opinion, the requirement of the test is to compute the quantile value of a list of number with known p-th percentile
-- To solve the problem, I provide an API `quantile` which takes the input - a json form of the list named `pool` and the p-th percentile named `percentile`
+- To solve the problem, I provide an API `quantile` which takes the input - a json form that contains the list named `pool` and the p-th percentile named `percentile`
 - The algorithm I used in this project is:
     - Let `n` be the length of the `sorted_pool` and `0 < p <= 100` be the desired percentile.
     - If `n = 1` return the unique array element (regardless of the value of `p`); otherwise
