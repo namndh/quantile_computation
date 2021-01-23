@@ -1,5 +1,5 @@
 import math
-from typing import List, Optional
+from typing import List
 
 
 def compute_quantile(pool: List[float], percentile: float) -> float:

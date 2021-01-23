@@ -1,6 +1,8 @@
-import pytest
 from typing import List, Dict, Any
-from app.utils import compute_quantile
+
+import pytest
+
+from src.helper import compute_quantile
 
 
 def test_quantile():
@@ -25,7 +27,7 @@ def test_quantile():
         },
         {
             "name": "pos_less_than_1",
-            "pool": [1, 2 ,4 ,5 ,3],
+            "pool": [1, 2, 4, 5, 3],
             "percentile": 2,
             "result": float(1)
         }

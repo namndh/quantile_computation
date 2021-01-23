@@ -16,8 +16,8 @@
 - To up the container: `docker-compose up`
 ### Usage
 - Main API which uses to compute quantile value:
-    - `http://0.0.0.0:5000/quantile`
-- You can use: `Postman`, `curl` or the add-on Swagger in the url: `http://0.0.0.0:5000` to test the API    
+    - `http://127.0.0.1:5000/quantile`
+- You can use: `Postman`, `curl` or the add-on Swagger in the url: `http://127.0.0.1:5000` to test the API    
 ### Contributing
 Pull request are welcome. Please open any issues to help me improve the project
 ### Reference
