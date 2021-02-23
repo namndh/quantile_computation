@@ -8,28 +8,68 @@ app = Api(app=flask_app, title="Quantile computation", description="Compute valu
 
 name_space = app.namespace('/', description="List of APIs")
 
-input_model = app.model("Input", {
-    "pool": fields.List(fields.Float, required=True, description="List of samples"),
-    "percentile": fields.Float(required=True, description="p-th percentile of the list of samples to compute")
+pool_query_model = app.model("pool_query", {
+    "poolId": fields.Integer(required=True, description="Index of pool"),
+    "percentile": fields.Float(required=True, description="p-th percentile of the list of samples to compute value")
 })
 
+pool_model = app.model("pool_model", {
+    "poolId": fields.Integer(required=True, description="Index of pool"),
+    "poolValues": fields.List(fields.Float, required=True, description="List of samples")
+})
 
-@name_space.route('/quantile')
-class Quantile(Resource):
+pools = []
+
+
+@name_space.route('/pool')
+class Pool(Resource):
     @app.doc(responses={200: 'OK', 400: 'Invalid Argument'})
-    @app.expect(input_model)
+    @app.expect(pool_model)
     def post(self):
         try:
             if request.is_json:
                 input_data = request.get_json()
-                pool = input_data.get("pool")
-                percentile = input_data.get("percentile")
-                if pool is not None and percentile is not None:
-                    pool = list(map(float, pool))
-                    percentile = float(percentile)
-                return make_response({"quantile": compute_quantile(pool, percentile)}, 200)
+                pool_id = input_data.get("poolId")
+                pool_values = input_data.get("poolValues")
+                if pool_id is not None and pool_values is not None:
+                    pool_id = int(pool_id)
+                    pool_values = list(map(float, pool_values))
+                    for pool in pools:
+                        if pool_id in pool:
+                            pool[pool_id].extend(pool_values)
+                            print(pools)
+                            return make_response({"status": "appended"}, 200)
+                    pools.append({pool_id: pool_values})
+                    print(pools)
+                    return make_response({"status": "inserted"}, 200)
         except Exception as e:
-            name_space.abort(400, e.__doc__, status="Could not compute quantile", statusCode="400")
+            name_space.abort(400, e.__doc__, status="Could not insert/update pool", statusCode="400")
+
+
+@name_space.route('/quantile')
+class Quantile(Resource):
+    @app.doc(responses={200: 'OK', 400: 'Invalid Argument', 204: 'No Content'})
+    @app.expect(pool_query_model)
+    def post(self):
+        try:
+            if request.is_json:
+                input_data = request.get_json()
+                pool_id = input_data.get("poolId")
+                percentile = input_data.get("percentile")
+                if pool_id is not None and percentile is not None:
+                    pool_id = int(pool_id)
+                    percentile = float(percentile)
+                for pool in pools:
+                    if pool_id in pool:
+                        return make_response(
+                            {
+                                "numSamples": len(pool[pool_id]),
+                                "percentile": compute_quantile(pool[pool_id], percentile)
+                            },
+                            200)
+                return make_response({}, 204)
+        except Exception as e:
+            name_space.abort(400, e.__doc__, status="Could not query the pool", statusCode="400")
 
 
 if __name__ == '__main__':
