@@ -16,7 +16,8 @@
 - To up the container: `docker-compose up`
 ### Usage
 - Main API which uses to compute quantile value:
-    - `http://127.0.0.1:5000/quantile`
+    - `http://127.0.0.1:5000/pool` - Used to update value of a pool or insert a new pool. A pool is defined as a dictionary with key is its id and value is list of its samples  
+    - `http://127.0.0.1:5000/quantile` - Used to compute p-th percentile value of a pool
 - You can use: `Postman`, `curl` or the add-on Swagger in the url: `http://127.0.0.1:5000` to test the API    
 ### Contributing
 Pull request are welcome. Please open any issues to help me improve the project
