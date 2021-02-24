@@ -4,7 +4,9 @@ from flask_restplus import Api, Resource, fields
 from helper import compute_quantile
 
 flask_app = Flask(__name__)
-app = Api(app=flask_app, title="Quantile computation", description="Compute value of quantile p-th of an array")
+app = Api(app=flask_app, title="Quantile computation", description="""An application with two APIs that:
+                                                                      - Store and update pools of samples and 
+                                                                      - Compute value of quantile p-th of a pool with given p-th quantile""")
 
 name_space = app.namespace('/', description="List of APIs")
 
@@ -13,7 +15,7 @@ pool_query_model = app.model("pool_query", {
     "percentile": fields.Float(required=True, description="p-th percentile of the list of samples to compute value")
 })
 
-pool_model = app.model("pool_model", {
+pool_model = app.model("pool", {
     "poolId": fields.Integer(required=True, description="Index of pool"),
     "poolValues": fields.List(fields.Float, required=True, description="List of samples")
 })
@@ -37,10 +39,8 @@ class Pool(Resource):
                     for pool in pools:
                         if pool_id in pool:
                             pool[pool_id].extend(pool_values)
-                            print(pools)
                             return make_response({"status": "appended"}, 200)
                     pools.append({pool_id: pool_values})
-                    print(pools)
                     return make_response({"status": "inserted"}, 200)
         except Exception as e:
             name_space.abort(400, e.__doc__, status="Could not insert/update pool", statusCode="400")

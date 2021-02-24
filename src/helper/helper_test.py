@@ -14,9 +14,15 @@ def test_quantile():
             "result": float(3),
         },
         {
-            "name": "wrong_percentile",
+            "name": "wrong_percentile_1",
             "pool": [1, 2, 3, 4, 5],
             "percentile": 120,
+            "result": ValueError
+        },
+        {
+            "name": "wrong_percentile_2",
+            "pool": [1, 2, 3, 4, 5],
+            "percentile": 0,
             "result": ValueError
         },
         {

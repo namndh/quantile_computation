@@ -20,5 +20,5 @@ def compute_quantile(pool: List[float], percentile: float) -> float:
                 return pool[int(pos) - 1]
             else:
                 return pool[math.floor(pos) - 1] + dif * (pool[math.floor(pos)] - pool[math.floor(pos) - 1])
-        elif percentile < 0 or percentile > 100:
+        elif percentile <= 0 or percentile > 100:
             raise ValueError("Percentile is out of range")
