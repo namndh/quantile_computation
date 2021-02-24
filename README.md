@@ -1,8 +1,14 @@
 ## Techcombank Interview Coding Test
 
 ### Problem definition:
-- In my opinion, the requirement of the test is to compute the quantile value of a list of number with known p-th percentile
-- To solve the problem, I provide an API `quantile` which takes the input - a json form that contains the list named `pool` and the p-th percentile named `percentile`
+- In my opinion, the requirement of the test is to create a application with two apis that:
+    - Add or update a pool of values 
+    - Compute the quantile value of a pool with known p-th percentile
+### Installation:
+- Requirement: `docker`, `docker-compose`
+- To build a new container: `docker-compose build`
+- To up the container: `docker-compose up`
+### Solution
 - The algorithm I used in this project is:
     - Let `n` be the length of the `sorted_pool` and `0 < p <= 100` be the desired percentile.
     - If `n = 1` return the unique array element (regardless of the value of `p`); otherwise
@@ -10,15 +16,10 @@
     - If `pos < 1` return the smallest element in the array.
     - Else if `pos >= n` return the largest element in the array.
     - Else let `lower = sorted_pool[floor(pos)-1]` and let `upper = sorted_pool[floor(pos)]` (in Python, array start with 0). Return `lower + d * (upper - lower)`
-### Installation:
-- Requirement: `docker`, `docker-compose`
-- To build a new container: `docker-compose build`
-- To up the container: `docker-compose up`
-### Usage
-- Main API which uses to compute quantile value:
-    - `http://127.0.0.1:5000/pool` - Used to update value of a pool or insert a new pool. A pool is defined as a dictionary with key is its id and value is list of its samples  
-    - `http://127.0.0.1:5000/quantile` - Used to compute p-th percentile value of a pool
-- You can use: `Postman`, `curl` or the add-on Swagger in the url: `http://127.0.0.1:5000` to test the API    
+- APIs:
+    - `http://127.0.0.1:5000/pool` - it takes the input - a json form that contains id of the pool and its value, it is used to update value of a pool or insert a new pool. A pool is defined as a dictionary with key is its id and value is list of its samples  
+    - `http://127.0.0.1:5000/quantile` - it takes the input - a json form that contains id of the pool and the p-th percentile, it is used to compute p-th percentile value of a pool
+- You can use: `Postman`, `curl` or the add-on `Swagger` in the url: `http://127.0.0.1:5000` to test the API    
 ### Contributing
 Pull request are welcome. Please open any issues to help me improve the project
 ### Reference
