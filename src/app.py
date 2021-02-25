@@ -68,7 +68,7 @@ class Quantile(Resource):
                         return make_response(
                             {
                                 "numSamples": len(pool[pool_id]),
-                                "percentile": compute_quantile(pool[pool_id], percentile)
+                                "quantile": compute_quantile(pool[pool_id], percentile)
                             },
                             200)
                 return make_response({}, 204)
