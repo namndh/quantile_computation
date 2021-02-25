@@ -4,9 +4,11 @@ from flask_restplus import Api, Resource, fields
 from helper import compute_quantile
 
 flask_app = Flask(__name__)
-app = Api(app=flask_app, title="Quantile computation", description="""An application with two APIs that:
-                                                                      - Store and update pools of samples and 
-                                                                      - Compute value of quantile p-th of a pool with given p-th quantile""")
+app = Api(app=flask_app,
+          title="Quantile computation",
+          description="""An application with two APIs that:
+                            - Store and update pools of samples and 
+                            - Compute value of quantile p-th of a pool with given p-th quantile""")
 
 name_space = app.namespace('/', description="List of APIs")
 
@@ -42,6 +44,8 @@ class Pool(Resource):
                             return make_response({"status": "appended"}, 200)
                     pools.append({pool_id: pool_values})
                     return make_response({"status": "inserted"}, 200)
+                else:
+                    raise ValueError("poolId/poolValues is None")
         except Exception as e:
             name_space.abort(400, e.__doc__, status="Could not insert/update pool", statusCode="400")
 
